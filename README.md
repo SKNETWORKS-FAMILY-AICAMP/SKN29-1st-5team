@@ -273,7 +273,7 @@ graph TD
 | **Data Processing** | `Python`, `Pandas` | 수집 데이터 정제 및 항목별 통계 분석 |
 | **Visualization** | `Streamlit`, `Plotly` | 지도 기반 탐색 및 인터랙티브 그래프 구현 |
 ---
-### 5.3개념 모델 설계
+### 5.3 개념 모델 설계
 
 #### 5.3.1 요구 정의서 (Requirements)
 * **목적:** 고속도로 휴게소 정보, 자동차 등록 통계, 고속도로 통행량, 브랜드별 FAQ 통합 제공
