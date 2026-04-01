@@ -430,37 +430,36 @@ CREATE TABLE forecast_traffic (
 ```
 ---
 
-## 6. 데이터 수집 및 정제
+## 📚 6. 사용한 데이터 (Data Sources & Preprocessing)
 
-### 4.1 데이터 출처
+프로젝트에 사용된 데이터는 공공기관 API, 국가 통계 포털, 그리고 각 브랜드사 FAQ를 기반으로 하며, 데이터베이스 내 테이블명과 매칭하여 정리했습니다.
 
-- 공공데이터 포털, 한국도로공사, 국가데이터처 각 사이트별 Open API에서 크롤링
+### 6.1 데이터 출처 및 활용 현황
 
-### 4.2 수집 항목
+| 출처 | 데이터명 (Table Name) | 링크 |
+| :--- | :--- | :--- |
+| **국가데이터처** | 자동차등록대수현황 (`vehicle_registrations`) | [KOSIS 바로가기](https://kosis.kr/statHtml/statHtml.do?sso=ok&returnurl=https%3A%2F%2Fkosis.kr%3A443%2FstatHtml%2FstatHtml.do%3Fconn_path%3DI2%26tblId%3DDT_MLTM_1244%26orgId%3D116%26) |
+| **국토교통부** | 자동차등록현황보고 (`car_registration_stats`) | [통계누리 바로가기](https://stat.molit.go.kr/portal/cate/statView.do?hRsId=58&hFormId=5498) |
+| **공공데이터포털** | 휴게소 기본 정보 (`rest_areas`) | [데이터포털 바로가기](https://www.data.go.kr/data/15025446/standard.do) |
+| **한국도로공사** | 노선별 휴게시설 현황 (`rest_area_amenties`) | [데이터플랫폼 바로가기](https://data.ex.co.kr/openapi/basicinfo/openApiInfoM?apiId=0317) |
+| **한국도로공사** | 현재 교통예보 현황 (`forecast_traffic`) | [데이터플랫폼 바로가기](https://data.ex.co.kr/openapi/basicinfo/openApiInfoM?apiId=0303) |
+| **한국도로공사** | 주유소별 가격 및 업체 현황 (`rest_area_gas`) | [데이터플랫폼 바로가기](https://data.ex.co.kr/openapi/basicinfo/openApiInfoM?apiId=0312) |
+| **한국도로공사** | 휴게소 행사 현황 조회 (`rest_area_events`) | [데이터플랫폼 바로가기](https://data.ex.co.kr/openapi/basicinfo/openApiInfoM?apiId=0505) |
+| **한국도로공사** | 휴게소 푸드메뉴 현황 조회 (`foodinfo`) | [데이터플랫폼 바로가기](https://data.ex.co.kr/openapi/basicinfo/openApiInfoM?apiId=0502) |
+| **ITS 국가교통정보센터** | 실시간 CCTV 화상자료 | [ITS 바로가기](https://www.its.go.kr/opendata/opendataList?service=cctv) |
+| **KIA** | 기아자동차 FAQ (`kia_faq`) | [공식 홈페이지](https://www.kia.com/kr/customer-service/center/faq) |
+| **현대자동차** | 현대자동차 FAQ (`hyundai_faq`) | [공식 홈페이지](https://www.hyundai.com/kr/ko/faq.html) |
+| **한국도로공사** | 하이패스 FAQ (`hipass_faq`) | [공식 홈페이지](https://hipass.co.kr/board/selectFaqList.do) |
 
-- **자동차 등록 대수**
-    - 연도별 등록 대수
-    - 월별 등록 대수
-    - 연료별
-    - 차종별
-    - 성별
-    - 연령대별
-    - 국산/외산
-- **고속도로 정보 관련**
-    - 연도별 고속도로 통행량
-    - 고속도로 실시간 CCTV
-    - 실시간 주요 도시 통행 소요시간
-- **휴게소 정보 관련**
-    - 휴게소 위치 좌표
-    - 휴개소 내 주유소의 실시간 연료값
-    - 휴게소 내 컨텐츠 정보
-    - 휴게소 내 행사 정보
+---
 
-### 4.3 전처리
+### 6.2 데이터 전처리 (Data Preprocessing)
 
-- **수치 정규화**
-    - 주유값 정수 변환
+수집된 데이터의 효율적인 활용을 위해 다음과 같은 최소한의 최적화 전처리를 수행했습니다.
 
-- **도메인 전처리**
-    - 컬럼명을 영어에서 한글로 변환
+* **CSV 컬럼 최적화:** 국가 통계 및 공공데이터 CSV 파일 내의 방대한 컬럼 중, 대시보드 구현 및 분석에 필수적인 핵심 컬럼만을 선별하여 재구성했습니다.
+* **API 호출 매개변수 설정:** 각 기관에서 제공하는 OpenAPI 호출 시, 불필요한 데이터 수신을 방지하고 서비스에 필요한 특정 데이터(지역, 노선 등)만 정확히 수집하기 위해 매개변수(Parameter)를 정의하여 적용했습니다.
+* **데이터 타입 정제:** DB 저장 및 시각화 라이브러리(Plotly, Folium)와의 호환성을 위해 수치 데이터 및 날짜 데이터의 형식을 일치시켰습니다.
+
+
 
