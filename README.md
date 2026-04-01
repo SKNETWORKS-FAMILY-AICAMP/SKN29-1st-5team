@@ -357,8 +357,7 @@ CREATE TABLE rest_area_events (
 ```
 #### ② 차량 등록 및 교통 통계 (Vehicle & Traffic Stats)
 연도별/항목별 차량 등록 현황 및 고속도로 통행량 통계 데이터입니다.
-```
-SQL
+```sql
 -- 상세 차량 등록 통계
 CREATE TABLE car_registration_stats (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -384,8 +383,7 @@ CREATE TABLE vehicle_registrations (
 ```
 #### ③ 통합 FAQ 및 예측 정보 (FAQ & Forecast)
 브랜드별 FAQ 데이터와 교통 예측 정보를 관리합니다.
-```
-SQL
+```sql
 -- 브랜드별 FAQ (현대, 기아, 하이패스)
 CREATE TABLE hyundai_faq (
     id INT AUTO_INCREMENT PRIMARY KEY,
