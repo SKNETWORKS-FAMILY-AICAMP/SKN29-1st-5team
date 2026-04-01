@@ -66,9 +66,6 @@ ITS_API_KEY=""
 streamlit run app.py
 ```
 ---
-## ERD
-<img alt="image" src="./picture/ERD.png">
-
 
 ## 🖼 메인 페이지 및 기능 소개 (Features)
 ### 메인 페이지 및 사이드바
@@ -198,44 +195,227 @@ streamlit run app.py
 
 ---
 
-## 2. 프로젝트 개요
+## 📝 2. 프로젝트 배경 및 목적
 
-### 1.1 프로젝트 요약
-
-- 기 : 해마다 꾸준히 증가하는 자동차 등록대수로 인한 고속도로 통행량 증가 발생
-- 승 : 고속도로를 이용하는 운전자들의 단순 길 안내를 넘어 고속도로 이용 중 편리한 정보의 제공이 필요
-- 전 : 그 중 휴게소는 단순 휴식공간이 아닌 운전자들에게 다양한 정보 및 콘텐츠를 제공함
-- 결 : 자동차 등록대수 증가로 인한 운저자들의 고속도로 정보가 필요하기 때문에 휴게소 및 고속도로 내의 정보 제공이 필요하다는 타당성
+해마다 자동차 등록 대수와 고속도로 통행량이 증가함에 따라, 휴게소 이용량 또한 많아질 것으로 보입니다.<br>
+그래서 저희는 운전자에게 필요한 고속도로 이용 정보 및 휴게소 상세 정보를 통합하여 제공하고자 합니다.<br>
+휴게소 콘텐츠, 실시간 도로 상황, 각종 통계 등을 확인할 수 있는 페이지를 제작했습니다.
 
 ---
 
-### 1.2 문제 정의
+## 🛠 3. 핵심 기능
 
-요즘에는 고속도로 내에 위치한 휴게소를 목적지에 가기위해 거쳐가는 곳으로만 이용하지 않고, 다양한 컨텐츠를 즐기러 가기위한 사람들이 증가되고 있음에도 불구하고 정보를 알 수 있는 방법이 한정적이거나 복잡함
-
----
-
-## 2. 핵심 기능
-
-| 구분         | 기능                       | 설명                                          |
-|-------------|---------------------------|-----------------------------------------------|
-| 동적 크롤링   | CCTV 및 연료값 실시간 연동  | 1시간 내지 간격으로 실시간 정보 확인 가능           |
-| 시각화       | map에 option추가          | 각 휴게소별 제공하는 컨텐츠 정보 확인 가능           |
-| 시각화       | 연도별 차량 등록 대수 증가   | 연도별 차량 등록 대수 증가를 항복멸 확인 가능        |
+| 구분 | 기능 | 설명 |
+| :--- | :--- | :--- |
+| **데이터 수집** | **동적 크롤링** | 주요 노선 분기점 **실시간 CCTV** 영상 및 휴게소에 위치한 **주유소 연료값** 데이터 연동 |
+| **시각화** | **지도 기반 정보 제공** | 전국 고속도로 노선별 휴게소 위치와 각 휴게소별 **편의시설, 메뉴, 행사** 정보 시각화 |
+| **통계** | **차량 등록 현황 분석** | 연도별 자동차 등록 대수 통계를 **연료·차종·연령·성별** 등 항목별로 확인 |
+| **정보 통합** | **통합 FAQ 게시판** | **현대·기아자동차 및 하이패스**의 고객 지원 데이터를 수집하여 통합 검색 지원 |
 
 ---
+## 📁 4. GitHub 폴더 구조
+```bash
+PROJECT_1/
 
-## 3. 시스템 아키텍처
-
+├── Crawling/                  # 크롤링 및 데이터 수집 관련 폴더
+│   ├── dynamic_crw.ipynb      # FAQ 데이터 크롤링 
+│   ├── rest_area2.ipynb       # 휴게소 데이터 정보 수집
+│   ├── rest_event.ipynb       # 휴게소 이벤트 데이터 수집
+│   ├── rest_gas.ipynb         # 휴게소 주유소 데이터 수집
+│   ├── traffic_forecast.ipynb # 교통 예상 시간 데이터 수집
+│   └── traffic_upload.py      # 교통 데이터 업로드 스크립트
+├── page/                      # Streamlit 각 페이지 모듈 폴더
+│   ├── page_faq.py            # FAQ 페이지
+│   ├── page_map.py            # 휴게소 위치 지도 페이지
+│   ├── page_stats.py          # 자동차 및 통계 페이지
+│   ├── page_traffic_time.py   # 주요 지역 소요 시간 페이지
+│   └── page_traffic.py        # 고속도로 통행량 페이지
+├── picture/                   # 이미지 리소스 폴더
+│   ├── ERD.png                # 데이터베이스 설계도
+│   ├── highway.png            # 고속도로 배경 이미지
+│   ├── readme main background.png # README용 배경 이미지
+│   └── (기타 이미지 파일들...)
+├── .env                       # 환경 변수 설정 파일 (API 키 등)
+├── .gitignore                 # Git 제외 대상 설정 파일
+├── app.py                     # Streamlit 메인 실행 파일
+├── requirements.txt           # 설치 필요한 라이브러리 목록
+├── sidebar.py                 # 사이드바 메뉴 구성 모듈
+└── utils.py                   # 공통 유틸리티 함수 모듈
 ```
-공공데이터 크롤링 → MySQL → Python 분석 → Streamlit 서비스
-한국도로공사 크롤링 → MySQL → Python 분석 → Streamlit 서비스
-국가데이터처 크롤링 → MySQL → Python 분석 → Streamlit 서비스
-```
+## 🏗 5. 시스템 아키텍처 및 데이터베이스 설계
+본 프로젝트는 고속도로 휴게소 정보, 차량 통계, 교통량 및 FAQ 데이터를 체계적으로 관리하기 위해 관계형 데이터베이스(MySQL)를 사용하며, 실시간성이 중요한 데이터와 통계 데이터를 분리하여 설계했습니다.
+### 5.1 시스템 아키텍처 및 데이터 흐름
+데이터의 성격에 따라 **데이터베이스 저장(MySQL) 저장 방식**과 **Direct API 호출 방식**을 구분하여 효율성을 확보했습니다.
+```mermaid
+graph TD
+    %% 정적/통계 데이터 경로 (MySQL 저장)
+    subgraph "Batch Pipeline (정적/통계 데이터)"
+        A1[공공 API / 크롤링<br/>자동차 등록, 휴게소 시설, FAQ] -->|데이터 수집| B[(데이터 저장<br/>MySQL)]
+        B --> C[데이터 처리 및 분석<br/>Python / Pandas]
+        C -->|시각화| D[Streamlit 대시보드]
+    end
 
-데이터 수집, 저장, 분석, 시각화 단계를 분리하여 확장성과 유지보수성을 확보함.
+    %% 실시간 데이터 경로 (Direct API 호출)
+    subgraph "Real-time Pipeline (실시간 데이터)"
+        A2[공공 API 서버<br/>CCTV 주소, 실시간 소요 시간] -.->|Direct API 호출| D
+    end
+
+    %% 스타일 정의
+    classDef storage fill:#f9f,stroke:#333,stroke-width:2px;
+    class B storage;
+    linkStyle 3 stroke:#ff3333,stroke-width:2px,stroke-dasharray: 5 5;
+```
+### 5.2 단계별 상세 기술
+| 단계 | 기술 스택 | 주요 역할 |
+| :--- | :--- | :--- |
+| **Data Collection** | `Selenium`, `BeautifulSoup` | 공공 API 연동 및 브랜드별 FAQ/실시간 도로 정보 크롤링 |
+| **Database** | `MySQL` | 수집된 자동차 등록 통계, 휴게소 시설 및 FAQ 데이터 관리 |
+| **Data Processing** | `Python`, `Pandas` | 수집 데이터 정제 및 항목별 통계 분석 |
+| **Visualization** | `Streamlit`, `Plotly` | 지도 기반 탐색 및 인터랙티브 그래프 구현 |
+---
+### 5.3개념 모델 설계
+
+#### 5.3.1 요구 정의서 (Requirements)
+* **목적:** 고속도로 휴게소 정보, 자동차 등록 통계, 고속도로 통행량, 브랜드별 FAQ 통합 제공
+* **주요 기능:** 지도 기반 휴게소 탐색, 실시간 유가 및 편의시설 조회, 연도별 차량/교통 통계 시각화, 브랜드 통합 FAQ
+* **데이터 출처:** 공공 API(도로공사, ITS), 공공데이터포털 CSV, 웹 크롤링(현대/기아/하이패스)
+
+#### 5.3.2 개념 엔티티 정의 (Based on ERD)
+* **rest_areas:** 프로젝트의 중심이 되는 휴게소 기본 정보 (좌표, 노선명 등)
+* **rest_area_sub:** 휴게소와 연관된 상세 정보 (음식, 편의시설, 주유소, 이벤트)
+* **stats_data:** 독립적으로 관리되는 자동차 등록 및 고속도로 통행량 통계 데이터
+* **faq_data:** 브랜드별(현대, 기아, 하이패스) 독립 FAQ 데이터
+
+### 5.4 ERD (Entity Relationship Diagram)
+전체 데이터 구조와 테이블 간의 관계(1:1, 1:N)는 아래와 같습니다.
+
+<img src="./picture/ERD.png" width="100%" alt="Database ERD">
 
 ---
+
+### 5.5 물리 모델 설계 (DDL)
+
+ERD 구조를 바탕으로 구현된 MySQL 전용 테이블 생성 스크립트입니다. 
+
+#### ① 휴게소 통합 정보 (Rest Area Cluster)
+휴게소 기본 정보를 부모로 하며, 음식·편의시설·주유소·이벤트 정보가 외래키(FK)로 연결됩니다.
+
+```sql
+-- 휴게소 기본 정보 (부모 테이블)
+CREATE TABLE rest_areas (
+    restarea_name VARCHAR(200) PRIMARY KEY,
+    route_name VARCHAR(100),
+    xValue DOUBLE,
+    yValue DOUBLE,
+    service_area_code VARCHAR(50)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 휴게소 음식 정보
+CREATE TABLE foodinfo (
+    restarea_name VARCHAR(200),
+    foodNm VARCHAR(50),
+    foodCost VARCHAR(20),
+    etc TEXT,
+    recommendyn VARCHAR(2),
+    seasonMenu VARCHAR(2),
+    bestfoodyn VARCHAR(2),
+    premiumyn VARCHAR(2),
+    FOREIGN KEY (restarea_name) REFERENCES rest_areas(restarea_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 휴게소 편의시설 정보
+CREATE TABLE rest_area_amenties (
+    restarea_name VARCHAR(200) PRIMARY KEY,
+    rest_eng CHAR(1), rest_elc CHAR(1), rest_plc CHAR(1), rest_pha CHAR(1), rest_nur CHAR(1),
+    FOREIGN KEY (restarea_name) REFERENCES rest_areas(restarea_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 휴게소 주유소 정보
+CREATE TABLE rest_area_gas (
+    restarea_name VARCHAR(200) PRIMARY KEY,
+    route_name VARCHAR(100),
+    lpgYn TINYINT,
+    gasoline_price INT,
+    disel_price INT,
+    lpg_price INT,
+    svarAddr VARCHAR(50),
+    FOREIGN KEY (restarea_name) REFERENCES rest_areas(restarea_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 휴게소 이벤트 정보
+CREATE TABLE rest_area_events (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    std_rest_cd VARCHAR(50),
+    start_time DATETIME,
+    route_name VARCHAR(100),
+    restarea_name VARCHAR(200),
+    end_time DATETIME,
+    event_detail TEXT,
+    event_name TEXT,
+    FOREIGN KEY (restarea_name) REFERENCES rest_areas(restarea_name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+#### ② 차량 등록 및 교통 통계 (Vehicle & Traffic Stats)
+연도별/항목별 차량 등록 현황 및 고속도로 통행량 통계 데이터입니다.
+```
+SQL
+-- 상세 차량 등록 통계
+CREATE TABLE car_registration_stats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    regist_yy VARCHAR(4), regist_mt VARCHAR(2), vhcty_asort_code VARCHAR(1),
+    regist_grc_code VARCHAR(2), use_fuel_code VARCHAR(2), cnm_code VARCHAR(6),
+    prpos_se_code VARCHAR(1), sexdstn VARCHAR(10), agrde VARCHAR(1),
+    dspvl_code VARCHAR(2), hmmd_imp_se_nm VARCHAR(10), prye VARCHAR(4),
+    cnt INT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 고속도로 통행량 및 등록 추이
+CREATE TABLE highway_traffic (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    traffic_year INT, vehicle_class VARCHAR(20), traffic_volume BIGINT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE vehicle_registrations (
+    reg_year INT, vehicle_type VARCHAR(20),
+    total_count INT, official_count INT, private_count INT, business_count INT,
+    PRIMARY KEY (reg_year, vehicle_type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+#### ③ 통합 FAQ 및 예측 정보 (FAQ & Forecast)
+브랜드별 FAQ 데이터와 교통 예측 정보를 관리합니다.
+```
+SQL
+-- 브랜드별 FAQ (현대, 기아, 하이패스)
+CREATE TABLE hyundai_faq (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category_main VARCHAR(100), category_sub VARCHAR(100),
+    question TEXT, answer TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE kia_faq (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(100), question TEXT, answer TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE hipass_faq (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category_main VARCHAR(100), category_sub VARCHAR(100),
+    question TEXT, answer TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- 교통 예측 정보
+CREATE TABLE forecast_traffic (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sdate VARCHAR(20),
+    stime VARCHAR(20),
+    cjunkook VARCHAR(200),
+    cjibangDir VARCHAR(200),
+    cseoulDir VARCHAR(200),
+    -- ... (기타 도시 컬럼 생략 없이 ERD 기반 생성 가능)
+    fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
 
 ## 4. 데이터 수집 및 정제
 
@@ -277,8 +457,8 @@ streamlit run app.py
 ### 5.1 개념 모델 설계
 #### 요구 정의서
   - 목적: 고속도로 휴게소 정보, 차량 통계, 연도별 통행량, 구간별 소요시간, FAQ를 통합 제공
-  - 주요 기능: 휴게소 위치 조회 및 지도 표시, 연도별/구간별 통계 시각화, 통행량 분석, 소요시간 분석, FAQ.
-  - 데이터 출처: 교통 센서/도로공사 API, 공공데이터(통행량·휴게소 목록), 내부 수집(사용자 업로드 CSV), 스케줄링된 배치 수집.
+  - 주요 기능: 휴게소 위치 조회 및 지도 표시, 연도별/구간별 통계 시각화, 통행량 분석, 소요시간 분석 및 분기점 CCTV 제공, FAQ.
+  - 데이터 출처: 교통 센서/도로공사 API, ITS 국가교통데이터센터(CCTV), 공공데이터(통행량·휴게소 목록), 내부 수집(사용자 업로드 CSV), 스케줄링된 배치 수집.
 
 #### 5.1.1 개념 엔티티 정의
   - RestArea: 휴게소(아이디, 이름, 위도, 경도, 도로명, 편의시설 목록, 운영시간)
@@ -292,149 +472,7 @@ streamlit run app.py
   - RestArea 1 : N TrafficCount (한 휴게소에 여러 통행량 기록)
   - RestArea 1 : N TravelTime (휴게소 인근 구간의 소요시간 기록)
   - Region 1 : N VehicleRegistration (지역별 연도별 등록 통계)
-
 ---
 
-### 5.2 논리 모델 설계
-
-```
-핵심 테이블 스키마 예시 (논리 모델)
-TABLE RestArea (
-  rest_area_id SERIAL PRIMARY KEY,
-  name VARCHAR(200),
-  latitude DECIMAL(9,6),
-  longitude DECIMAL(9,6),
-  road_name VARCHAR(200),
-  amenities JSONB,
-  open_hours VARCHAR(100),
-  created_at TIMESTAMP,
-  updated_at TIMESTAMP
-);
-
-TABLE TrafficCount (
-  traffic_id SERIAL PRIMARY KEY,
-  rest_area_id INT REFERENCES RestArea(rest_area_id),
-  measured_at TIMESTAMP,
-  vehicle_count INT,
-  vehicle_type VARCHAR(50),
-  source VARCHAR(100)
-);
-
-TABLE TravelTime (
-  travel_time_id SERIAL PRIMARY KEY,
-  segment_id VARCHAR(100),
-  rest_area_id INT REFERENCES RestArea(rest_area_id),
-  measured_at TIMESTAMP,
-  avg_travel_time_sec INT,
-  stddev_travel_time_sec INT
-);
-
-TABLE VehicleRegistration (
-  reg_id SERIAL PRIMARY KEY,
-  year INT,
-  region VARCHAR(100),
-  vehicle_type VARCHAR(50),
-  registered_count INT
-);
-
-TABLE FAQ (
-  faq_id SERIAL PRIMARY KEY,
-  title VARCHAR(300),
-  content TEXT,
-  author VARCHAR(100),
-  tags VARCHAR(200),
-  created_at TIMESTAMP,
-  updated_at TIMESTAMP
-);
-```
----
-
-### 5.3 물리 모델 설계
-#### 5.3.1 데이터 베이스
-5.3.1 데이터 베이스
-- 권장 DBMS: PostgreSQL (PostGIS 확장 사용 권장)
-- 저장소 설계:
-- 공간 데이터: 휴게소 위치는 geometry(Point)로 저장, 공간 인덱스(GIST) 생성.
-- 시간 시계열: 통행량·소요시간은 파티셔닝(예: 연도별 또는 월별) 적용.
-- JSONB: 편의시설 등 가변 속성은 JSONB로 저장하여 유연성 확보.
-- 인덱스: rest_area_id, measured_at, 공간 인덱스, 자주 조회되는 조합 컬럼 복합 인덱스 생성.
-- 백업/복구: 정기 스냅샷 및 WAL 아카이빙.
-- 접근 제어: 최소 권한 원칙, DB 사용자별 권한 분리.
-
----
-
-## 6. 서비스 UI 흐름
-- 사이드바 메뉴 구조 (app.py 기준)
-- 메인 홈 (Hero 이미지)
-- 등록된 자동차 통계 (show_stats)
-- 연도별 등록 추이 (show_yearly_stats)
-- 연도별 고속도로 통행량 (page_traffic.show_page)
-- 주요 지역 소요 시간 (page_traffic_time.show_page)
-- 휴게소 정보 (휴게소 상세 페이지; 현재 미구현)
-- FAQ 게시판 (show_faq)
-- 휴게소 위치 지도 (page_map.show_rest_area_map)
-- 페이지별 핵심 UI 요소
-- 메인 홈: 대형 히어로 배너, 주요 KPI 카드(총 휴게소 수, 최근 피크 시간 등)
-- 통계 페이지: 필터(연도, 지역), 시계열 차트, 표 다운로드 버튼
-- 통행량 페이지: 구간 선택, 히트맵/라인차트
-- 소요시간 페이지: 구간별 평균·분산, 지도 오버레이
-- 휴게소 지도: 클러스터 마커, 팝업에 편의시설·평점 표시
-- FAQ: 질문 검색, 카테고리 필터, 관리자 답변 기능
-
----
-
-## 7. GitHub 폴더 구조
-
-```bash
-PROJECT_1/
-
-├── Crawling/                  # 크롤링 및 데이터 수집 관련 폴더
-
-│   ├── dynamic_crw.ipynb      # FAQ 데이터 크롤링 
-
-│   ├── rest_area2.ipynb       # 휴게소 데이터 정보 수집
-
-│   ├── rest_event.ipynb       # 휴게소 이벤트 데이터 수집
-
-│   ├── rest_gas.ipynb         # 휴게소 주유소 데이터 수집
-
-│   ├── traffic_forecast.ipynb # 교통 예상 시간 데이터 수집
-
-│   └── traffic_upload.py      # 교통 데이터 업로드 스크립트
-
-├── page/                      # Streamlit 각 페이지 모듈 폴더
-
-│   ├── page_faq.py            # FAQ 페이지
-
-│   ├── page_map.py            # 휴게소 위치 지도 페이지
-
-│   ├── page_stats.py          # 자동차 및 통계 페이지
-
-│   ├── page_traffic_time.py   # 주요 지역 소요 시간 페이지
-
-│   └── page_traffic.py        # 고속도로 통행량 페이지
-
-├── picture/                   # 이미지 리소스 폴더
-
-│   ├── ERD.png                # 데이터베이스 설계도
-
-│   ├── highway.png            # 고속도로 배경 이미지
-
-│   ├── readme main background.png # README용 배경 이미지
-
-│   └── (기타 이미지 파일들...)
-
-├── .env                       # 환경 변수 설정 파일 (API 키 등)
-
-├── .gitignore                 # Git 제외 대상 설정 파일
-
-├── app.py                     # Streamlit 메인 실행 파일
-
-├── requirements.txt           # 설치 필요한 라이브러리 목록
-
-├── sidebar.py                 # 사이드바 메뉴 구성 모듈
-
-└── utils.py                   # 공통 유틸리티 함수 모듈
-```
 
 ---
