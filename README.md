@@ -286,6 +286,20 @@ graph TD
 * **stats_data:** 독립적으로 관리되는 자동차 등록 및 고속도로 통행량 통계 데이터
 * **faq_data:** 브랜드별(현대, 기아, 하이패스) 독립 FAQ 데이터
 
+#### 5.3.3 개념 관계 (Conceptual Relationships)
+데이터베이스 설계의 핵심은 **`rest_areas` (휴게소 기본 정보)** 테이블을 중심으로 상세 정보들이 유기적으로 연결된 구조입니다.
+
+* **Rest Area : Food Info (1 : N)**
+    * 한 휴게소에는 여러 개의 음식 메뉴 정보가 존재합니다. (`restarea_name` 기준)
+* **Rest Area : Amenities (1 : 1)**
+    * 한 휴게소는 하나의 표준화된 편의시설 현황(수유실, 전기차 충전소 등 보유 여부)을 가집니다.
+* **Rest Area : Gas Station (1 : 1)**
+    * 한 휴게소는 하나의 주유소 정보(실시간 유가, 브랜드, 위치 등)와 매칭됩니다.
+* **Rest Area : Events (1 : N)**
+    * 한 휴게소에서는 기간별로 여러 개의 이벤트나 홍보 행사가 진행될 수 있습니다.
+* **Independent Stats (독립 엔티티)**
+    * `car_registration_stats`, `highway_traffic`, `vehicle_registrations` 등은 특정 휴게소에 종속되지 않고, **연도/지역/차종**을 기준으로 관리되는 독립적인 통계 데이터군입니다.
+
 ### 5.4 ERD (Entity Relationship Diagram)
 전체 데이터 구조와 테이블 간의 관계(1:1, 1:N)는 아래와 같습니다.
 
