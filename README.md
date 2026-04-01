@@ -414,8 +414,9 @@ CREATE TABLE forecast_traffic (
     fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 ```
+---
 
-## 4. 데이터 수집 및 정제
+## 6. 데이터 수집 및 정제
 
 ### 4.1 데이터 출처
 
@@ -449,28 +450,3 @@ CREATE TABLE forecast_traffic (
 - **도메인 전처리**
     - 컬럼명을 영어에서 한글로 변환
 
----
-
-## 5. 데이터베이스 설계
-### 5.1 개념 모델 설계
-#### 요구 정의서
-  - 목적: 고속도로 휴게소 정보, 차량 통계, 연도별 통행량, 구간별 소요시간, FAQ를 통합 제공
-  - 주요 기능: 휴게소 위치 조회 및 지도 표시, 연도별/구간별 통계 시각화, 통행량 분석, 소요시간 분석 및 분기점 CCTV 제공, FAQ.
-  - 데이터 출처: 교통 센서/도로공사 API, ITS 국가교통데이터센터(CCTV), 공공데이터(통행량·휴게소 목록), 내부 수집(사용자 업로드 CSV), 스케줄링된 배치 수집.
-
-#### 5.1.1 개념 엔티티 정의
-  - RestArea: 휴게소(아이디, 이름, 위도, 경도, 도로명, 편의시설 목록, 운영시간)
-  - TrafficCount: 통행량(아이디, 휴게소 또는 구간 참조, 측정일시, 차량수, 차종구분)
-  - VehicleRegistration: 등록차량 통계(아이디, 연도, 지역, 등록대수, 차량종류)
-  - TravelTime: 구간 소요시간(아이디, 구간ID, 측정일시, 평균소요시간, 표준편차)
-  - FAQ: 기본적인 안내사항
-  - Amenities: 휴게소 편의시설 표준화 테이블(편의시설ID, 이름, 카테고리)
-
-#### 5.1.2 개념 관계
-  - RestArea 1 : N TrafficCount (한 휴게소에 여러 통행량 기록)
-  - RestArea 1 : N TravelTime (휴게소 인근 구간의 소요시간 기록)
-  - Region 1 : N VehicleRegistration (지역별 연도별 등록 통계)
----
-
-
----
