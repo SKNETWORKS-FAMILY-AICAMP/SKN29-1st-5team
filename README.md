@@ -32,15 +32,40 @@
 ---
 ## 실행 방법 (How to Run)
 
-### 1) 환경변수 설정
+## 🛠 환경 변수 설정 (Environment Variables)
 
-- `.env'에 ""안에는 호스트로부터 제공받은 값을 입력합니다.
-- 필요 변수: DB_HOST="", DB_PORT="", DB_USER="", DB_PASSWORD="", DB_NAME_CARMASTER=""
-DB_NAME_VEHICLE_YEAR="", DB_NAME_FAQ="", DB_NAME_TRAFFIC=", ITS_API_KEY=""
+이 프로젝트를 로컬 환경에서 실행하기 위해서는 `.env` 파일을 생성하고 아래의 변수들을 설정해야 합니다.
+
+### 1. `.env` 파일 생성
+프로젝트 루트 디렉토리에 `.env` 파일을 만들고 아래 내용을 복사하여 붙여넣으세요.
+
+```env
+# Database Connection
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=""
+
+# Database Names
+DB_NAME_CARMASTER=carmaster_db
+DB_NAME_VEHICLE_YEAR=vehicle_db_year
+DB_NAME_FAQ=faq_data
+DB_NAME_TRAFFIC=traffic
+DB_NAME_REST=rest_area
+
+# API Keys
+ITS_API_KEY=""
+```
 ---
-### 2) streamlit 실행
-  프로젝트 폴더의 최상단 위치에서 다음 명령어를 실행한다.
+### 2. Streamlit 실행
+
+`.env` 설정이 완료되었다면, 프로젝트 루트 디렉토리(최상단) 폴더에서 터미널을 열고 아래 명령어를 입력하여 실행합니다.
+
 ```bash
+# 의존성 라이브러리가 설치되어 있지 않다면 먼저 실행 (선택 사항)
+# pip install -r requirements.txt
+
+# 터미널 입력
 streamlit run app.py
 ```
 ---
@@ -48,15 +73,24 @@ streamlit run app.py
 <img alt="image" src="./picture/ERD.png">
 
 
-## 구현 화면 (Demo)
-### 1) 메인 홈
+## 구현 화면
+### 1. 메인 페이지 및 사이드바
+프로젝트의 전반적인 개요와 네비게이션을 제공합니다.
 
-<img alt="image" src="./picture/readme main background.png" />
+| 메인 대시보드 | 사이드바 메뉴 |
+| :---: | :---: |
+| <img src="./picture/readme%20main%20background.png" width="100%"> | <img src="./picture/sidebar.png" width="100%"> |
+| **대시보드 안내**<br>부트캠프 기수, 조 이름, 슬로건 및 이용 안내 | **네비게이션**<br>전체 메뉴 이동 및 기능 제어 |
 
-- txt : 부트캠프 기수, 조 이름, 슬로건, Web 안내사항
-- btn : sidebar menu(메인 홈, 등록된 자동차 통계, 연도별 등록 추이, 연도별 고속도로 통행량, 주요 지역 소요 시간, 휴게소 위치 지도, FAQ 게시판)
-
----
+#### 📂 사이드바 상세 메뉴
+사용자는 사이드바를 통해 아래의 데이터 분석 페이지로 이동할 수 있습니다.
+* **🏠 메인 홈**: 프로젝트 소개 및 팀 정보
+* **📊 등록된 자동차 통계**: 최근 5개월 차종별/지역별 등록 현황
+* **📈 연도별 등록 추이**: 시간에 따른 자동차 등록 변화
+* **🛣 연도별 고속도로 통행량**: 연도별 교통량 데이터
+* **⏱ 주요 지역 소요 시간**: 출발/도착지별 실시간 예상 시간 및 CCTV 화면 제공
+* **📍 휴게소 위치 지도**: 고속도로별 휴게소 위치 및 상세 정보
+* **❓ FAQ 게시판**: 자주 묻는 질문 및 안내
 
 ### 2) 등록된 자동차 통계
        (최근 5개월 자동차 신규 등록 통계)
