@@ -268,7 +268,7 @@ graph TD
 ### 5.2 단계별 상세 기술
 | 단계 | 기술 스택 | 주요 역할 |
 | :--- | :--- | :--- |
-| **Data Collection** | `Selenium`, `BeautifulSoup` | 공공 API 연동 및 브랜드별 FAQ/실시간 도로 정보 크롤링 |
+| **Data Collection** | `Selenium`, `BeautifulSoup` | 공공 API 연동 및 브랜드별 FAQ/실시간 도로 정보 크롤링 및 .csv 파일 수집 |
 | **Database** | `MySQL` | 수집된 자동차 등록 통계, 휴게소 시설 및 FAQ 데이터 관리 |
 | **Data Processing** | `Python`, `Pandas` | 수집 데이터 정제 및 항목별 통계 분석 |
 | **Visualization** | `Streamlit`, `Plotly` | 지도 기반 탐색 및 인터랙티브 그래프 구현 |
