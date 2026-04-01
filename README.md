@@ -183,7 +183,7 @@ streamlit run app.py
 
 #### ② 기아자동차 (KIA FAQ)
 기아멤버스, 차량 구매 및 정비 등 기아자동차 고객을 위한 주요 FAQ를 확인할 수 있으며, 지도 정보 오류 조치 방법 등 실질적인 가이드를 제공합니다.
-<img src="./picture/6_3.jpg" width="100%" alt="기아 FAQ 상세 화면">
+<img src="./picture/6_3.png" width="100%" alt="기아 FAQ 상세 화면">
 
 #### ③ 하이패스 (HIPASS FAQ)
 단말기 등록, 선불카드 관리, 하이패스 서비스 이용 중 발생하는 오류 및 조치 방법을 상세히 안내합니다.
